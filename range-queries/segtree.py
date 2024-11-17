@@ -12,15 +12,17 @@ def build(i, l, r):
         tree[i] = tree[2*i+1] + tree[2*i+2]
 
 def query(i, l, r, ql, qr):
+    # Complete overlap
     if ql <= l and r <= qr:
         return tree[i]
-    elif qr < l or ql > r:
+    # No overlap
+    if qr < l or ql > r:
         return 0
-    else:
-        mid = l + (r-l)//2
-        lst = query(2*i+1, l, mid, ql, qr)
-        rst = query(2*i+2, mid+1, r, ql, qr)
-        return lst+rst
+    # Partial overlap
+    mid = l + (r-l)//2
+    lst = query(2*i+1, l, mid, ql, qr)
+    rst = query(2*i+2, mid+1, r, ql, qr)
+    return lst+rst
     
 def update(i, l, r, newi, val):
     if l == r:
