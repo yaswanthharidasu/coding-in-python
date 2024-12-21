@@ -2,8 +2,8 @@ import heapq
 
 def dijsktras(n, edges, start):
     graph = [[] for _ in range(n+1)]
-    for u,v,w in edges:
-        graph[u].append([v, w])
+    for u,v,wt in edges:
+        graph[u].append([v, wt])
 
     distances = [float('inf') for _ in range(n+1)]
     distances[start] = 0
@@ -14,7 +14,7 @@ def dijsktras(n, edges, start):
         # To avoid reiterating of neighbours of node u (same node can present two times in the heap)
         if currDistance > distances[u]:
             continue
-        for v, w in graph[u]:
-            if distances[u]+w < distances[v]:
-                distances[v] = distances[u]+w
-                heapq.heappush(shortest, [distances[v], v])
+        for v, wt in graph[u]:
+            if currDistance+wt < distances[v]:
+                distances[v] = currDistance+wt
+                heapq.heappush(shortest, (distances[v], v))
